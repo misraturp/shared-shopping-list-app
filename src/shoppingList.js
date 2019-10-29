@@ -1,21 +1,28 @@
 import React from 'react';
-import listItem from './item';
+import Card from './Card';
 
-const shoppingList = ({listOfItems}) => {
+const Shoplist = ({listOfItems}) => {
 	return(
-		<div>
-		{
-		listOfItems.map((item, index) => {
-			return(
-			<listItem name={item.name}
-			quantity={item.quantity} />
-			);
-			})
+			<div>
+				{
+					listOfItems.map((item, index) => {
+						return(
+							<Card key={item.id}
+							name={item.name}
+							quantity={item.quan} />
+						);
+					}
+				)}
 
-		}
-		</div>
 
-		)
+			</div>
+
+		);
 }
 
-export default shoppingList;
+export default Shoplist;
+
+
+
+				
+			
