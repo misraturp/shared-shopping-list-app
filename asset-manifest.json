@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/shared-shopping-list-app/static/css/main.496795fc.chunk.css",
+    "main.js": "/shared-shopping-list-app/static/js/main.503e2109.chunk.js",
+    "main.js.map": "/shared-shopping-list-app/static/js/main.503e2109.chunk.js.map",
+    "runtime-main.js": "/shared-shopping-list-app/static/js/runtime-main.c866893a.js",
+    "runtime-main.js.map": "/shared-shopping-list-app/static/js/runtime-main.c866893a.js.map",
+    "static/css/2.05f6e4a7.chunk.css": "/shared-shopping-list-app/static/css/2.05f6e4a7.chunk.css",
+    "static/js/2.fe1d9c73.chunk.js": "/shared-shopping-list-app/static/js/2.fe1d9c73.chunk.js",
+    "static/js/2.fe1d9c73.chunk.js.map": "/shared-shopping-list-app/static/js/2.fe1d9c73.chunk.js.map",
+    "index.html": "/shared-shopping-list-app/index.html",
+    "precache-manifest.b2f7084482680a14789ccbb4ec163ea6.js": "/shared-shopping-list-app/precache-manifest.b2f7084482680a14789ccbb4ec163ea6.js",
+    "service-worker.js": "/shared-shopping-list-app/service-worker.js",
+    "static/css/2.05f6e4a7.chunk.css.map": "/shared-shopping-list-app/static/css/2.05f6e4a7.chunk.css.map",
+    "static/css/main.496795fc.chunk.css.map": "/shared-shopping-list-app/static/css/main.496795fc.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c866893a.js",
+    "static/css/2.05f6e4a7.chunk.css",
+    "static/js/2.fe1d9c73.chunk.js",
+    "static/css/main.496795fc.chunk.css",
+    "static/js/main.503e2109.chunk.js"
+  ]
+}
