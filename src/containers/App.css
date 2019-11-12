@@ -1,0 +1,8 @@
+.bodyContent{
+	display:grid;
+	grid-template-columns: repeat(autofill, minmax(60px, 3fr));
+}
+
+.weirdCircle{
+	vertical-align: right;
+}

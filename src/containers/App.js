@@ -1,6 +1,7 @@
 import React from 'react';
 import Shoplist from '../components/shoppinglist';
 import InputBox from '../components/Input';
+import Menu from '../components/Menu';
 import {items} from './items';
 import './App.css';
 
@@ -58,7 +59,12 @@ class App extends React.Component {
         <div className='tc'>
           <h1 className='f1'> shopping list </h1>
           <InputBox inputValue={this.state.inputfield} addClicked = {this.addClicked} onKeyPress={this.keyPressed} changed={this.handleChange}/>
-          <Shoplist listOfItems = {this.state.items}/>
+          
+          <div className='bodyContent'>
+            <Shoplist listOfItems = {this.state.items}/>
+            <Menu className='weirdCircle' />
+          </div>
+
         </div>
 
       );
