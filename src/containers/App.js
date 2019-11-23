@@ -1,7 +1,10 @@
 import React from 'react';
 import Shoplist from '../components/shoppinglist';
 import InputBox from '../components/Input';
-import Menu from '../components/Menu';
+// import Menu from '../components/Menu';
+import Navigation from '../components/Navigation';
+import Signin from '../components/Signin';
+import Register from '../components/Register';
 import {items} from './items';
 import './App.css';
 
@@ -11,7 +14,9 @@ class App extends React.Component {
     super()
     this.state = {
       items: items,
-      inputfield: ''
+      inputfield: '',
+      route: 'signin',
+      isSignedIn: false
     }
 
   }
@@ -53,22 +58,38 @@ class App extends React.Component {
     }
   }
 
+  onRouteChange = (to_page) => {
+    if(to_page==='signin'){
+      this.setState({isSignedIn: false});
+    } else if(to_page === 'home'){
+      this.setState({isSignedIn: true});
+    }
+      this.setState({route: to_page});
+  }
+
 
   render(){
     return(
         <div className='tc'>
           <h1 className='f1'> shopping list </h1>
-          <InputBox inputValue={this.state.inputfield} addClicked = {this.addClicked} onKeyPress={this.keyPressed} changed={this.handleChange}/>
-          
-          <div className='bodyContent'>
-            <Shoplist listOfItems = {this.state.items}/>
-            <Menu className='weirdCircle' />
-          </div>
-
+          {this.state.isSignedIn 
+            ?
+            <div>
+              <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+              <InputBox inputValue={this.state.inputfield} addClicked = {this.addClicked} onKeyPress={this.keyPressed} changed={this.handleChange}/>
+              
+              <div className='bodyContent'>
+                <Shoplist listOfItems = {this.state.items}/>
+              </div>
+            </div>
+            :(this.state.route==='signin'
+            ? <Signin onRouteChange={this.onRouteChange}/>
+            : <Register onRouteChange={this.onRouteChange}/>
+            )
+          }
         </div>
-
-      );
-  }
+          );
+        }
 
 }
 
