@@ -4,7 +4,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*background: linear-gradient(to left, rgba(191, 209, 245,1) 0%, rgba(227,228,230,1) 100%);*/
+  background: linear-gradient(to left, rgba(191, 30, 245,1) 0%, rgba(0,228,230,1) 100%);
 
 }
+
+
 
