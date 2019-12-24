@@ -15,8 +15,8 @@ class Shoplist extends React.Component {
 					listOfItems.map((item, index) => {
 						return(
 							<Card key={item.id}
-							name={item.name}
-							quantity={item.quan}
+							name={item.item}
+							quantity={item.quantity}
 							increaseClick={this.props.increaseClick}
 							decreaseClick={this.props.decreaseClick}
 							deleteClicked={this.props.deleteClicked} />

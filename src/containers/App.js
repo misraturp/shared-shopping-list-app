@@ -8,106 +8,200 @@ import Register from '../components/Register';
 import {items} from './items';
 import './App.css';
 
+const initial_state = {
+  isSignedIn: false,
+  route: 'signin',
+  inputfield: '',
+  latest_id: 5,
+  user_related:{
+    family_id: 0,
+    family_name: '',
+    list_of_sls: [],
+    active_sl_id: 0,
+    items:items
+  }
+}
 
 class App extends React.Component {
   constructor(){
     super()
-    this.state = {
-      items: items,
-      inputfield: '',
-      route: 'signin',
-      isSignedIn: false,
-      latest_id: 5
-    }
+    this.state = initial_state
+
+    // {
+    //   items: items,
+    //   inputfield: '',
+    //   route: 'signin',
+    //   isSignedIn: false,
+    // }
 
   }
 
   handleChange = (event) => {
     this.setState({inputfield: event.target.value});
+    console.log(this.state.inputfield)
+  }
+
+  loadItems = (active_sl_id) => {
+    console.log(active_sl_id)
+    fetch('http://localhost:3030/items',{
+      method:'post',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        shopping_list_id: this.state.user_related.active_sl_id
+      })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      this.setState({
+          user_related:{
+            ...this.state.user_related,
+            items:data
+          }
+        })
+    })
+  }
+
+  loadUser = (data) => {
+
+    console.log(data)
+
+    this.setState({ user_related: {
+      ...this.state.user_related,
+      family_id: data.family_id,
+      family_name:data.family_name
+    }})
+
+    fetch('http://localhost:3030/shopping_lists',{
+      method:'post',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        family_id: this.state.user_related.family_id
+      })
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        // let shopList_names = data.map(a => a.shopping_list_name)
+        // let shopList_ids = data.map(a => a.shopping_list_id)
+
+        this.setState({
+          user_related:{
+            ...this.state.user_related,
+            list_of_sls: data,
+            // list_of_sls_ids: shopList_ids,
+            active_sl_id: data[0].shopping_list_id,
+          }
+        })
+      return (data[0].shopping_list_id)
+      })
+    .then(this.loadItems)
   }
   
   addClicked = () => {
-    let arr = this.state.items;
+
+    let arr = this.state.user_related.items;
     let new_item_name = this.state.inputfield.toLowerCase();
+    new_item_name = new_item_name[0].toUpperCase()+new_item_name.slice(1); 
 
-    if(arr.some(el => el.name.toLowerCase() === new_item_name)){
-      let new_item_quantity = arr.find(o=>o.name.toLowerCase()===new_item_name).quan+1;
-      console.log(new_item_quantity)
-      this.setState(prevState => ({
-        items: prevState.items.map(
-          el => el.name.toLowerCase() === new_item_name? { ...el, quan: new_item_quantity }: el
-        )
-
-      }))
-      console.log(this.state.items)
+    if(arr.some(el => el.item.toLowerCase() === new_item_name)){
+      // if the item already exists
+      this.increaseClick(new_item_name)
     }
     else{
-      // make first letter capital before adding to array
-      new_item_name = new_item_name[0].toUpperCase()+new_item_name.slice(1); 
-      // let latest_id = arr.slice(-1)[0].id;
-      let newID = this.state.latest_id+1;
-      let newItem = {id: newID, name:new_item_name, quan:1}
-      arr.push(newItem)
-      this.setState({items: arr});
-      this.setState({latest_id: newID});
+      fetch('http://localhost:3030/addItem',{
+        method:'post',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          shopping_list_id: this.state.user_related.active_sl_id,
+          item: new_item_name
+        })
+      })
+      .then(list => list.json())
+      .then(data=>{
+
+        data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+        this.setState({
+            user_related:{
+              ...this.state.user_related,
+              items:data
+            }
+          })
+      })
+      .catch(err=>console.log('error while adding new item'))
+
     }
     this.setState({inputfield:''});
   }
 
   increaseClick = (item_name) => {
 
-    let arr = this.state.items;
+    fetch('http://localhost:3030/increaseQuantity',{
+      method:'put',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        shopping_list_id: this.state.user_related.active_sl_id,
+        item: item_name
+      })
+    })
+    .then(list => list.json())
+    .then(data=>{
 
-    let new_item_quantity = arr.find(o=>o.name===item_name).quan+1;
+      data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      this.setState({
+          user_related:{
+            ...this.state.user_related,
+            items:data
+          }
+        })
+    })
+    .catch(err=>console.log('error while updating item quantity'))
 
-    console.log(new_item_quantity)
-
-    this.setState(prevState => ({
-        items: prevState.items.map(
-          el => el.name === item_name? { ...el, quan: new_item_quantity }: el
-        )
-
-      }))
   }
 
   decreaseClick = (item_name) => {
-    let arr = this.state.items;
-
-    let new_item_quantity = arr.find(o=>o.name===item_name).quan-1;
-
-    if(new_item_quantity===0){
-      let array = [...this.state.items]; // make a separate copy of the array
-      let index = array.findIndex(x => x.name ===item_name);
-
-        console.log(index)
-
-      if (index !== -1) {
-        array.splice(index, 1);
-        this.setState({items: array});
-      }
-    }
-       
-    else{
-      this.setState(prevState => ({
-            items: prevState.items.map(
-              el => el.name === item_name? { ...el, quan: new_item_quantity }: el
-            )
-
-        }))
-    }
+    fetch('http://localhost:3030/decreaseQuantity',{
+      method:'put',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        shopping_list_id: this.state.user_related.active_sl_id,
+        item: item_name
+      })
+    })
+    .then(list => list.json())
+    .then(data=>{
+      data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      this.setState({
+          user_related:{
+            ...this.state.user_related,
+            items:data
+          }
+        })
+    })
+    .catch(err=>console.log('error while updating item quantity'))
   }
 
   deleteClicked = (item_name) => {
 
-    let array = [...this.state.items]; // make a separate copy of the array
-    let index = array.findIndex(x => x.name===item_name);
+    fetch('http://localhost:3030/removeItem',{
+      method:'delete',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        shopping_list_id: this.state.user_related.active_sl_id,
+        item: item_name
+      })
+    })
+    .then(list => list.json())
+    .then(data=>{
+      data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      this.setState({
+          user_related:{
+            ...this.state.user_related,
+            items:data
+          }
+        })
+    })
+    .catch(err=>console.log('error while deleting item'))
 
-    console.log(index)
-
-    if (index !== -1) {
-      array.splice(index, 1);
-      this.setState({items: array});
-    }
   }
 
   keyPressed = (event) => {
@@ -123,9 +217,7 @@ class App extends React.Component {
       this.setState({isSignedIn: true});
     } 
       this.setState({route: to_page});
-    
   }
-
 
   render(){
     return(
@@ -138,12 +230,12 @@ class App extends React.Component {
               <InputBox inputValue={this.state.inputfield} addClicked = {this.addClicked} onKeyPress={this.keyPressed} changed={this.handleChange}/>
               
               <div className='bodyContent'>
-                <Shoplist listOfItems = {this.state.items} increaseClick={this.increaseClick} decreaseClick={this.decreaseClick} deleteClicked={this.deleteClicked}/>
+                <Shoplist listOfItems = {this.state.user_related.items} increaseClick={this.increaseClick} decreaseClick={this.decreaseClick} deleteClicked={this.deleteClicked}/>
               </div>
             </div>
             :(this.state.route==='signin'
-            ? <Signin onRouteChange={this.onRouteChange}/>
-            : <Register onRouteChange={this.onRouteChange}/>
+            ? <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+            : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
             )
           }
         </div>
