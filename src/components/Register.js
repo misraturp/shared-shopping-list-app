@@ -40,6 +40,12 @@ class Register extends React.Component{
 		.catch(err=>console.log('error while registering user.'))
 	}
 
+	keyPressed = (event) => {
+    if(event.key === 'Enter'){
+      this.onSubmitRegister();
+    }
+  }
+
 	render(){
 
 		return(
@@ -67,6 +73,7 @@ class Register extends React.Component{
 				      <div className="mv3">
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
 				        <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				      			onKeyPress={this.keyPressed}
 				        		onChange={this.onPasswordChange}
 				        		type="password" 
 				        		name="password"  
@@ -75,6 +82,7 @@ class Register extends React.Component{
 				    </fieldset>
 				    <div className="">
 				      <input onClick={this.onSubmitRegister} 
+				      			onKeyPress={this.keyPressed}
 				      			className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib pointer" 
 				      			type="submit" 
 				      			value="Sign up" />

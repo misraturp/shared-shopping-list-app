@@ -1,6 +1,15 @@
 .bodyContent{
-	display:grid;
-	grid-template-columns: repeat(autofill, minmax(60px, 3fr));
+	display:flex;
+	justify-content: space-between;
+	/*grid-template-columns: repeat(autofill, minmax(60px, 3fr));*/
+}
+
+.left-page{
+	flex-grow: 2;
+}
+
+.right-page{
+	flex-grow: 1;
 }
 
 .weirdCircle{

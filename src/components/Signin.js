@@ -32,7 +32,13 @@ class SignIn extends React.Component{
 				this.props.onRouteChange('home');
 			}
 		})
-		.catch(err=>console.log('error while trying to fecth user'))
+		.catch(err=>console.log('error while trying to fetch user'))
+	}
+
+	keyPressed = (event) => {
+    	if(event.key === 'Enter'){
+     	 this.onSubmitSignIn();
+    	}
 	}
 
 	render(){
@@ -55,6 +61,7 @@ class SignIn extends React.Component{
 				      <div className="mv3">
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
 				        <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				      			onKeyPress={this.keyPressed}
 				        		onChange={this.onPasswordChange}
 				        		type="password" 
 				        		name="password"  

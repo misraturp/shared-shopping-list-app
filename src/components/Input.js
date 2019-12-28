@@ -6,7 +6,7 @@ const InputBox = ({inputValue, changed, addClicked, onKeyPress}) => {
 			<input className='ma2'
 				onChange={changed} 
 				onKeyPress={onKeyPress}
-				value = {inputValue}
+				value={inputValue}
 				type='text' /> 
 	        <button 
 		        type="button" 

@@ -2,6 +2,7 @@ import React from 'react';
 import Shoplist from '../components/shoppinglist';
 import InputBox from '../components/Input';
 // import Menu from '../components/Menu';
+import SL_list from '../components/ShoppingListList';
 import Navigation from '../components/Navigation';
 import Signin from '../components/Signin';
 import Register from '../components/Register';
@@ -42,12 +43,14 @@ class App extends React.Component {
   }
 
   loadItems = (active_sl_id) => {
+
+    console.log(this.state.user_related.list_of_sls)
     console.log(active_sl_id)
     fetch('http://localhost:3030/items',{
       method:'post',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        shopping_list_id: this.state.user_related.active_sl_id
+        shopping_list_id: active_sl_id
       })
     })
     .then(res=>res.json())
@@ -99,38 +102,45 @@ class App extends React.Component {
   
   addClicked = () => {
 
-    let arr = this.state.user_related.items;
-    let new_item_name = this.state.inputfield.toLowerCase();
-    new_item_name = new_item_name[0].toUpperCase()+new_item_name.slice(1); 
+    if(this.state.inputfield !== ''){
 
-    if(arr.some(el => el.item.toLowerCase() === new_item_name)){
-      // if the item already exists
-      this.increaseClick(new_item_name)
-    }
-    else{
-      fetch('http://localhost:3030/addItem',{
-        method:'post',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          shopping_list_id: this.state.user_related.active_sl_id,
-          item: new_item_name
-        })
-      })
-      .then(list => list.json())
-      .then(data=>{
+      let arr = this.state.user_related.items;
 
-        data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
-        this.setState({
-            user_related:{
-              ...this.state.user_related,
-              items:data
-            }
+      // format new input to look like all items in database
+      let new_item_name = this.state.inputfield.toLowerCase();
+      new_item_name = new_item_name[0].toUpperCase()+new_item_name.slice(1); 
+
+      // if the item already exists, only increase its quantity
+      if(arr.some(el => el.item === new_item_name)){
+
+        this.increaseClick(new_item_name)
+      }
+      // if this is a new item, add it to the list, with quantity 1
+      else{
+        fetch('http://localhost:3030/addItem',{
+          method:'post',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            shopping_list_id: this.state.user_related.active_sl_id,
+            item: new_item_name
           })
-      })
-      .catch(err=>console.log('error while adding new item'))
+        })
+        .then(list => list.json())
+        .then(data=>{
 
+          data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+          this.setState({
+              user_related:{
+                ...this.state.user_related,
+                items:data
+              }
+            })
+        })
+        .catch(err=>console.log('error while adding new item'))
+
+      }
+      this.setState({inputfield:''});
     }
-    this.setState({inputfield:''});
   }
 
   increaseClick = (item_name) => {
@@ -204,6 +214,22 @@ class App extends React.Component {
 
   }
 
+  doneClicked = (item_name) => {
+    // change the color of the box
+    
+
+  }
+
+  slClicked = (sl_id) => {
+    this.setState({
+          user_related:{
+            ...this.state.user_related,
+            active_sl_id:sl_id
+          }
+        })
+    this.loadItems(sl_id)
+  }
+
   keyPressed = (event) => {
     if(event.key === 'Enter'){
       this.addClicked();
@@ -227,10 +253,15 @@ class App extends React.Component {
           {this.state.isSignedIn 
             ?
             <div>
-              <InputBox inputValue={this.state.inputfield} addClicked = {this.addClicked} onKeyPress={this.keyPressed} changed={this.handleChange}/>
+                <InputBox inputValue={this.state.inputfield} addClicked = {this.addClicked} onKeyPress={this.keyPressed} changed={this.handleChange}/>
               
               <div className='bodyContent'>
-                <Shoplist listOfItems = {this.state.user_related.items} increaseClick={this.increaseClick} decreaseClick={this.decreaseClick} deleteClicked={this.deleteClicked}/>
+                <div className='left-page'>
+                  <Shoplist listOfItems = {this.state.user_related.items} increaseClick={this.increaseClick} decreaseClick={this.decreaseClick} deleteClicked={this.deleteClicked}/>
+                </div>
+                <div className='right-page'>
+                  <SL_list listOfSls={this.state.user_related.list_of_sls} sl_clicked={this.slClicked} />
+                </div>
               </div>
             </div>
             :(this.state.route==='signin'

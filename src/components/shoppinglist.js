@@ -8,6 +8,7 @@ class Shoplist extends React.Component {
   }
 
   render(){
+  	// console.log(this.props.increaseClick)
   	const { listOfItems } = this.props;
   	return(
   		<div>
@@ -17,6 +18,7 @@ class Shoplist extends React.Component {
 							<Card key={item.id}
 							name={item.item}
 							quantity={item.quantity}
+							doneClicked={this.props.doneClicked}
 							increaseClick={this.props.increaseClick}
 							decreaseClick={this.props.decreaseClick}
 							deleteClicked={this.props.deleteClicked} />
@@ -27,9 +29,9 @@ class Shoplist extends React.Component {
 
 			</div>
   		)
-  }
+  	}
 
- }
+}
 
 export default Shoplist;
 
