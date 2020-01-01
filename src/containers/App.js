@@ -215,9 +215,26 @@ class App extends React.Component {
   }
 
   doneClicked = (item_name) => {
-    // change the color of the box
-    
 
+    fetch('http://localhost:3030/doneItem',{
+      method:'put',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        shopping_list_id: this.state.user_related.active_sl_id,
+        item: item_name
+      })
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      data = data.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      this.setState({
+            user_related:{
+              ...this.state.user_related,
+              items: data
+            }
+          })
+        }
+    )
   }
 
   slClicked = (sl_id) => {
@@ -228,6 +245,31 @@ class App extends React.Component {
           }
         })
     this.loadItems(sl_id)
+  }
+
+  addNewSL = (name) => {
+
+    console.log(name)
+    fetch('http://localhost:3030/addShoppingList',{
+      method:'post',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        shopping_list_name: name,
+        family_id: this.state.user_related.family_id
+      })
+    })
+    .then(response => response.json())
+    .then(data=>{
+        console.log(data)
+        this.setState({
+          user_related:{
+            ...this.state.user_related,
+            list_of_sls: data
+          }
+        })
+      return (data[0].shopping_list_id)
+      })
+    .catch(err=>console.log('error while adding new list'))
   }
 
   keyPressed = (event) => {
@@ -257,10 +299,10 @@ class App extends React.Component {
               
               <div className='bodyContent'>
                 <div className='left-page'>
-                  <Shoplist listOfItems = {this.state.user_related.items} increaseClick={this.increaseClick} decreaseClick={this.decreaseClick} deleteClicked={this.deleteClicked}/>
+                  <Shoplist listOfItems = {this.state.user_related.items} increaseClick={this.increaseClick} decreaseClick={this.decreaseClick} deleteClicked={this.deleteClicked} doneClicked={this.doneClicked}/>
                 </div>
                 <div className='right-page'>
-                  <SL_list listOfSls={this.state.user_related.list_of_sls} sl_clicked={this.slClicked} />
+                  <SL_list listOfSls={this.state.user_related.list_of_sls} sl_clicked={this.slClicked} addNewSL={this.addNewSL} />
                 </div>
               </div>
             </div>

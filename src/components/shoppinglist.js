@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from './Card';
 
-
 class Shoplist extends React.Component {
   constructor(props){
     super()
@@ -10,6 +9,7 @@ class Shoplist extends React.Component {
   render(){
   	// console.log(this.props.increaseClick)
   	const { listOfItems } = this.props;
+  	console.log(listOfItems);
   	return(
   		<div>
 				{
@@ -21,7 +21,8 @@ class Shoplist extends React.Component {
 							doneClicked={this.props.doneClicked}
 							increaseClick={this.props.increaseClick}
 							decreaseClick={this.props.decreaseClick}
-							deleteClicked={this.props.deleteClicked} />
+							deleteClicked={this.props.deleteClicked}
+							done={item.done} />
 						);
 					}
 				)}
@@ -30,7 +31,6 @@ class Shoplist extends React.Component {
 			</div>
   		)
   	}
-
 }
 
 export default Shoplist;

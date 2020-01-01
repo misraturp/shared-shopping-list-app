@@ -1,13 +1,16 @@
 import React from 'react';
 import './Card.css'
 
-const Card = ({name, quantity, increaseClick, decreaseClick, deleteClicked, doneClicked}) => {
+const Card = ({name, quantity, increaseClick, decreaseClick, deleteClicked, doneClicked, done}) => {
+	let div_class = `innercard br3 pa2 ma2 w-30 shadow ${done ? " strike bg-red" : "bg-yellow"}`
+	console.log(div_class)
+
 	return(
 		<div className = 'wholecard'>
         	<button type="button" 
 		        className="btn ma2 btn-dark" onClick={()=>doneClicked(name)}>Done</button>
 
-			<div className = 'innercard bg-yellow br3 pa2 ma2 w-30 shadow'>
+		    	<div className = {div_class}>
 
 				<p id='itemname'> {name} - {quantity} </p>
 
