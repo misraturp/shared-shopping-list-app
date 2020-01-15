@@ -10,6 +10,7 @@ const SLItem = ({id, name, slCLicked, image_url}) => {
                 <div className="dtc v-mid pl3">
                   <h1 className="f6 f5-ns fw6 lh-title black mv0">{name} </h1>
                 </div>
+                <p className='tr moon-gray'> x </p>
               </article>
             </main>
       )

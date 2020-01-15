@@ -1,9 +1,8 @@
 import React from 'react';
 import './Card.css'
 
-const Card = ({name, quantity, increaseClick, decreaseClick, deleteClicked, doneClicked, done}) => {
-	let div_class = `innercard br3 pa2 ma2 w-30 shadow ${done ? " strike bg-red" : "bg-yellow"}`
-	console.log(div_class)
+const Card = ({name, quantity, done, increaseClick, decreaseClick, deleteClicked, doneClicked}) => {
+	let div_class = `innercard br3 pa2 ma2 w-30 shadow ${done ? " done" : " undone"}`
 
 	return(
 		<div className = 'wholecard'>
@@ -12,12 +11,17 @@ const Card = ({name, quantity, increaseClick, decreaseClick, deleteClicked, done
 
 		    	<div className = {div_class}>
 
-				<p id='itemname'> {name} - {quantity} </p>
+				<p id='itemname' className='fw8 f3'> {name} </p> 
 
-				<div>
-				<button type="button" className="btn btn-secondary mh1" onClick={()=>increaseClick(name)}>+</button>
+				<div className='right-of-card'>
+					<h2 className='white mr3'> {quantity} </h2>
 
-				<button type="button" className="btn btn-secondary mh1" onClick={()=>decreaseClick(name)}>-</button>
+					<div>
+					<button type="button" className="btn btn-secondary mh1" onClick={()=>increaseClick(name)}>+</button>
+
+					<button type="button" className="btn btn-secondary mh1" onClick={()=>decreaseClick(name)}>-</button>
+					</div>
+
 				</div>
 
 			</div>

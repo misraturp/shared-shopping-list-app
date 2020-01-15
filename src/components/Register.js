@@ -1,4 +1,5 @@
 import React from 'react';
+import './Register.css'
 
 class Register extends React.Component{
 	constructor(props){
@@ -49,14 +50,14 @@ class Register extends React.Component{
 	render(){
 
 		return(
-			<article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+			<article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center form">
 				<main className="pa4 black-80">
 				  <div className="measure">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 				      <legend className="f1 fw6 ph0 mh0">Register</legend>
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="name">Family Name</label>
-				        <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				        <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-red w-100" 
 				        		onChange={this.onFamilyNameChange}
 				        		type="text" 
 				        		name="family-name"  
@@ -64,7 +65,7 @@ class Register extends React.Component{
 				      </div>
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-				        <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				        <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-red w-100" 
 				        		onChange={this.onEmailChange}
 				        		type="email" 
 				        		name="email-address"  
@@ -72,7 +73,7 @@ class Register extends React.Component{
 				      </div>
 				      <div className="mv3">
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-				        <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				        <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-red w-100" 
 				      			onKeyPress={this.keyPressed}
 				        		onChange={this.onPasswordChange}
 				        		type="password" 

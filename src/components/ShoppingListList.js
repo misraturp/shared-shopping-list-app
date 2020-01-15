@@ -31,7 +31,7 @@ class SL_list extends React.Component {
   render(){
     const { listOfSls, addNewSL } = this.props;
     return(
-        <div>
+        <div className='mr3'>
             {
               listOfSls.map((sl_item,index) => {
                 let random_number = Math.floor((Math.random() * 1000) + 1)

@@ -19,4 +19,21 @@
 .app-title{
 	margin: 10px;
 	padding: 10px;
+	color:#23395B;
 }
+
+app-header{
+	display:flex;
+	align-items: flex-end;
+}
+
+.navigation{
+	flex-grow: 1;
+}
+
+title{
+	display:flex;
+	align-items: center;
+	flex-grow: 2;
+}
+

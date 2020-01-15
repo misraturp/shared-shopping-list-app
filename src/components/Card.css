@@ -21,3 +21,15 @@ p{
 	flex-direction: row;
 	align-items: center;
 }
+
+.right-of-card{
+	display:flex;
+}
+
+.undone{
+	background-color:#59C9A5;
+}
+
+.done{
+	background-color: #D81E5B;
+}

@@ -6,7 +6,8 @@ import SL_list from '../components/ShoppingListList';
 import Navigation from '../components/Navigation';
 import Signin from '../components/Signin';
 import Register from '../components/Register';
-import {items} from './items';
+// import {items} from './items';
+import logo from './list.png';
 import './App.css';
 
 const initial_state = {
@@ -19,7 +20,7 @@ const initial_state = {
     family_name: '',
     list_of_sls: [],
     active_sl_id: 0,
-    items:items
+    items:[]
   }
 }
 
@@ -290,8 +291,13 @@ class App extends React.Component {
   render(){
     return(
         <div className='tc'>
-          <h1 className='f1 app-title'> shopping list </h1>
-          <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+          <app-header>
+            <title className='ml4 mt4 '>
+              <img className='w3 h3' src={logo} /> 
+              <h1 className='f1 app-title tl underline'> shopping list </h1>
+            </title>
+            <Navigation className='navigation' onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+          </app-header>
           {this.state.isSignedIn 
             ?
             <div>
