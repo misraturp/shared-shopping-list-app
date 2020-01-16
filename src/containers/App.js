@@ -7,6 +7,7 @@ import Navigation from '../components/Navigation';
 import Signin from '../components/Signin';
 import Register from '../components/Register';
 // import {items} from './items';
+import {APP_URL} from '../variables';
 import logo from './list.png';
 import './App.css';
 
@@ -47,7 +48,7 @@ class App extends React.Component {
 
     console.log(this.state.user_related.list_of_sls)
     console.log(active_sl_id)
-    fetch('http://localhost:3030/items',{
+    fetch(APP_URL + '/items',{
       method:'post',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -76,7 +77,7 @@ class App extends React.Component {
       family_name:data.family_name
     }})
 
-    fetch('http://localhost:3030/shopping_lists',{
+    fetch(APP_URL + '/shopping_lists',{
       method:'post',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -118,7 +119,7 @@ class App extends React.Component {
       }
       // if this is a new item, add it to the list, with quantity 1
       else{
-        fetch('http://localhost:3030/addItem',{
+        fetch(APP_URL + '/addItem',{
           method:'post',
           headers:{'Content-Type':'application/json'},
           body: JSON.stringify({
@@ -146,7 +147,7 @@ class App extends React.Component {
 
   increaseClick = (item_name) => {
 
-    fetch('http://localhost:3030/increaseQuantity',{
+    fetch(APP_URL + '/increaseQuantity',{
       method:'put',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -170,7 +171,7 @@ class App extends React.Component {
   }
 
   decreaseClick = (item_name) => {
-    fetch('http://localhost:3030/decreaseQuantity',{
+    fetch(APP_URL + '/decreaseQuantity',{
       method:'put',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -193,7 +194,7 @@ class App extends React.Component {
 
   deleteClicked = (item_name) => {
 
-    fetch('http://localhost:3030/removeItem',{
+    fetch(APP_URL + '/removeItem',{
       method:'delete',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -217,7 +218,7 @@ class App extends React.Component {
 
   doneClicked = (item_name) => {
 
-    fetch('http://localhost:3030/doneItem',{
+    fetch(APP_URL + '/doneItem',{
       method:'put',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
@@ -251,7 +252,7 @@ class App extends React.Component {
   addNewSL = (name) => {
 
     console.log(name)
-    fetch('http://localhost:3030/addShoppingList',{
+    fetch(APP_URL + '/addShoppingList',{
       method:'post',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({

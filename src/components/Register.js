@@ -1,5 +1,6 @@
 import React from 'react';
-import './Register.css'
+import './Register.css';
+import {APP_URL} from '../variables';
 
 class Register extends React.Component{
 	constructor(props){
@@ -22,7 +23,7 @@ class Register extends React.Component{
 	}
 
 	onSubmitRegister = () => {
-		fetch('http://localhost:3030/register',{
+		fetch(APP_URL + '/register',{
 			method:'post',
 			headers:{'Content-Type':'application/json'},
 			body: JSON.stringify({

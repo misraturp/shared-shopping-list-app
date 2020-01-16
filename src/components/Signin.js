@@ -1,5 +1,6 @@
 import React from 'react';
-import './SignIn.css'
+import './SignIn.css';
+import {APP_URL} from '../variables';
 
 class SignIn extends React.Component{
 	constructor(props){
@@ -18,7 +19,7 @@ class SignIn extends React.Component{
 	}
 
 	onSubmitSignIn = () => {
-		fetch('http://localhost:3030/signin',{
+		fetch(APP_URL + '/signin',{
 			method:'post',
 			headers:{'Content-Type':'application/json'},
 			body: JSON.stringify({
