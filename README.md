@@ -1,4 +1,4 @@
-App url: 
+App url: https://shared-shopping-list-app.herokuapp.com/
 
 ## Shared shopping list application
 
